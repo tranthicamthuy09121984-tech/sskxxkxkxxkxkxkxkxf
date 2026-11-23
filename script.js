@@ -35,3 +35,14 @@ async function testNguyezCodex() {
     console.error(error.message);
   }
 }
+
+<ToolMenu
+  onSelect={(tool) => {
+    if (tool.id === "file") {
+      console.log("Files:", tool.files);
+      return;
+    }
+
+    console.log("Đã chọn:", tool.name);
+  }}
+/>
