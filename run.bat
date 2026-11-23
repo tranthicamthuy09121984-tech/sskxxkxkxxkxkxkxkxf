@@ -19,8 +19,8 @@ call npm install
 if errorlevel 1 goto ERROR
 
 echo.
-echo [2.5] Cai dat thu vien requirements.txt
-pip install -r requirements.txt
+echo [2.5] Cai dat thu vien OpenAI
+npm install openai
 if  errorlevel 1 goto ERROR
 
 echo.
