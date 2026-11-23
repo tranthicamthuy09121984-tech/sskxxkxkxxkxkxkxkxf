@@ -19,6 +19,11 @@ call npm install
 if errorlevel 1 goto ERROR
 
 echo.
+echo [2.5] Cai dat thu vien requirements.txt
+pip install requirements.txt
+if  errorlevel 1 goto ERROR
+
+echo.
 echo [3/3] Khoi dong NguyezCodex...
 call npm run dev
 
