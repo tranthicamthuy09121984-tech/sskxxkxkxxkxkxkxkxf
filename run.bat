@@ -20,7 +20,7 @@ if errorlevel 1 goto ERROR
 
 echo.
 echo [2.5] Cai dat thu vien requirements.txt
-pip install requirements.txt
+pip install -r requirements.txt
 if  errorlevel 1 goto ERROR
 
 echo.
