@@ -29,7 +29,108 @@ function NguyezCodex() {
   const [languageError, setLanguageError] = useState("");
 
   const messagesEnd = useRef(null);
+  // ==============================
+  // MENU TOOL
+  // ==============================
+  
+import React, { useState, useRef } from "react";
 
+const tools = [
+  { id: "file", icon: "📎", name: "Thêm tệp tin", desc: "Đính kèm tài liệu" },
+  { id: "library", icon: "📚", name: "Thư viện", desc: "Chọn tài liệu đã lưu" },
+  { id: "image", icon: "🎨", name: "Tạo ảnh", desc: "Tạo hình ảnh bằng AI" },
+  { id: "web", icon: "🌐", name: "Tìm kiếm trên mạng", desc: "Tìm thông tin trực tuyến" },
+  { id: "research", icon: "🔎", name: "Nghiên cứu sâu", desc: "Phân tích chủ đề" },
+  { id: "sketch", icon: "✏️", name: "Phác thảo", desc: "Lên ý tưởng và bản nháp" },
+  { id: "think", icon: "🧠", name: "Suy nghĩ", desc: "Chế độ suy luận" },
+  { id: "gmail", icon: "✉️", name: "Gmail", desc: "Kết nối Gmail" },
+  { id: "github", icon: "🐙", name: "GitHub", desc: "Kết nối GitHub" }
+];
+
+export default function ToolMenu({ onSelect }) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const fileRef = useRef(null);
+
+  const filtered = tools.filter(t =>
+    t.name.toLowerCase().includes(query.toLowerCase())
+  );
+
+  function chooseTool(tool) {
+    if (tool.id === "file") {
+      fileRef.current?.click();
+      return;
+    }
+
+    onSelect?.(tool);
+    setOpen(false);
+    setQuery("");
+  }
+
+  return (
+    <div className="nc-tools">
+      <input
+        ref={fileRef}
+        type="file"
+        hidden
+        multiple
+        onChange={e => {
+          const files = Array.from(e.target.files || []);
+          onSelect?.({
+            id: "file",
+            name: "Tệp đính kèm",
+            files
+          });
+          e.target.value = "";
+        }}
+      />
+
+      <button
+        className="nc-plus"
+        type="button"
+        onClick={() => setOpen(!open)}
+        aria-label="Mở công cụ"
+      >
+        {open ? "×" : "+"}
+      </button>
+
+      {open && (
+        <div className="nc-tool-popup">
+          <input
+            className="nc-tool-search"
+            placeholder="Tìm công cụ..."
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            autoFocus
+          />
+
+          <div className="nc-tool-list">
+            {filtered.map(tool => (
+              <button
+                key={tool.id}
+                className="nc-tool-item"
+                type="button"
+                onClick={() => chooseTool(tool)}
+              >
+                <span className="nc-tool-icon">{tool.icon}</span>
+                <span className="nc-tool-info">
+                  <strong>{tool.name}</strong>
+                  <small>{tool.desc}</small>
+                </span>
+              </button>
+            ))}
+
+            {filtered.length === 0 && (
+              <p className="nc-tool-empty">Không tìm thấy công cụ.</p>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+  
   // ==============================
   // LOAD LANGUAGES
   // ==============================
